@@ -1,18 +1,32 @@
-package rss-feed_test
+package rssfeed_test
 
 import (
 	"testing"
 
-	"github.com/vichar/rss-feed"
+	"github.com/vichar/rssfeed"
 )
 
-func Test1(t *testing.T) {
-	// t.Run("1 should say 1", func(t *testing.T) {
-	// 	get := fizzbuzz.Say(1)
-	// 	want := "1"
-	// 	if want != get {
-	// 		t.Errorf("It should say %s but get %s", want, get)
-	// 	}
-	// })
+func TestGetContentWithValidURL(t *testing.T) {
+	t.Run("GetContent should return valid String URL", func(t *testing.T) {
+		response, error := rssfeed.GetContent("https://www.npr.org")
+		want := "200 OK"
+		if want != response.Status {
+			t.Errorf("It should say %s but get %s", want, response.Status)
+		}
+		if error != nil {
+			t.Errorf("An Unexpected Error occurs %s", error.Error())
+		}
+
+	})
+
+}
+
+func TestGetContentWithInvalidURL(t *testing.T) {
+	t.Run("GetContent should return Empty String", func(t *testing.T) {
+		response, error := rssfeed.GetContent("")
+		if error == nil {
+			t.Errorf("An Error is Expected %s %s", response.Status, error.Error())
+		}
+	})
 
 }

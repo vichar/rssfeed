@@ -1,7 +1,6 @@
 package rssfeed
 
 import (
-	"container/list"
 	"time"
 )
 
@@ -13,5 +12,5 @@ type RSSChannel struct {
 	Language      string
 	ImageURL      string
 	LastBuildDate *time.Time
-	Items         *list.List
+	Items         []RSSItem
 }

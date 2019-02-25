@@ -15,7 +15,7 @@ func TestParseRSSDataWithValidRSSURL(t *testing.T) {
 			response := rssfeed.ParseHTTPResponse(getResponse)
 			rssChannel, parsingError := rssfeed.ParseRSSData(response.Body)
 			if parsingError == nil {
-				if rssChannel.Items.Len() <= 0 {
+				if len(rssChannel.Items) <= 0 {
 					t.Errorf("Parsed Feed should contain at least 1 item")
 				}
 				if len(rssChannel.Title) <= 0 {

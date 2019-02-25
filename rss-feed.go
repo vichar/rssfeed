@@ -1,7 +1,6 @@
 package rssfeed
 
 import (
-	"container/list"
 	"errors"
 	"io/ioutil"
 	"net/http"
@@ -22,7 +21,9 @@ func ParseRSSData(xmlData string) (RSSChannel, error) {
 		channel.Language = feed.Language
 		channel.LastBuildDate = feed.PublishedParsed
 		channel.ImageURL = feed.Image.URL
-		var items = list.New()
+
+		items := make([]RSSItem, len(feed.Items))
+
 		for _, item := range feed.Items {
 			var rssItem RSSItem
 			rssItem.Title = item.Title
@@ -30,8 +31,9 @@ func ParseRSSData(xmlData string) (RSSChannel, error) {
 			rssItem.MediaLink = item.Enclosures[0].URL
 			rssItem.PubDate = item.PublishedParsed
 			rssItem.Language = channel.Language
-			items.PushFront(rssItem)
+			items = append(items, rssItem)
 		}
+
 		channel.Items = items
 		return channel, nil
 	}
